@@ -1,0 +1,19 @@
+{% macro responsive(data, options) %}
+  {% if data.options.classes.length > 0 %}
+    {% set hasClasses = true %}
+    {% set class = data.options.classes | join(' ') %}
+  {% endif %}
+  {% set image = apos.images.first(data.masterImage) %}
+  {% set topSize = module.getLargest(image) %}
+  {% set getSize = module.getSize %}
+  <img srcset="{{ getSize(image, 'one-sixth') + ' 190w' if getSize(image, 'one-sixth') }}{#
+               #}{{ ',' + getSize(image, 'one-third') + ' 380w' if getSize(image, 'one-third') }}{#
+               #}{{ ',' + getSize(image, 'one-half') + ' 570w' if getSize(image, 'one-half') }}{#
+               #}{{ ',' + getSize(image, 'two-thirds') + ' 760w' if getSize(image, 'two-thirds') }}{#
+               #}{{ ',' + getSize(image, 'full') + ' 1140w' if getSize(image, 'full') }}{#
+               #}{{ ',' + getSize(image, 'max') + ' 1600w' if getSize(image, 'max') }}"
+
+     src="{{ getSize(image, topSize) }}"
+     alt="{{ image.title or '' }}" {{ "class={{ class }}" if hasClasses }}
+     >
+{% endmacro %}

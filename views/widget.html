@@ -1,0 +1,8 @@
+{% import 'widgetMacros.html' as picture with context %}
+{% set widget = data.widget %}
+
+{% if widget.hasArtDirection === 'yes' %}
+  <h2>Not here yet.</h2>
+{% else %}
+  {{ picture.responsive(widget, data.options) }}
+{% endif %}

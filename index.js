@@ -31,6 +31,32 @@ module.exports = {
           limit: 1
         }
       }
-    ];
+    ].concat(options.addFields || []);
+  },
+  construct: (self, options) => {
+    var getUrl = self.apos.attachments.url;
+
+    self.addHelpers({
+      getSize: function (image, size) {
+        return getUrl(image, { size: size });
+      },
+      getLargest: function (image) {
+        if (getUrl(image, { size: 'max' })) {
+          return 'max';
+        } else if (getUrl(image, { size: 'full' })) {
+          return 'full';
+        } else if (getUrl(image, { size: 'two-thirds' })) {
+          return 'two-thirds';
+        } else if (getUrl(image, { size: 'one-half' })) {
+          return 'one-half';
+        } else if (getUrl(image, { size: 'one-third' })) {
+          return 'one-third';
+        } else if (getUrl(image, { size: 'one-sixth' })) {
+          return 'one-sixth';
+        } else {
+          return false;
+        }
+      }
+    });
   }
 };
